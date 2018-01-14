@@ -46,6 +46,8 @@ namespace RedditDB
 
         private void CreateDatabase(string bzipPath, DBHelper db)
         {
+            db.StartTransaction();
+
             string decompressedFile = GetDecompressedFile(bzipPath);
             using (StreamReader sr = new StreamReader(decompressedFile))
             {
@@ -61,6 +63,7 @@ namespace RedditDB
                     }
                 }
             }
+            db.EndTransaction();
 
         File.Delete(decompressedFile);
     }
